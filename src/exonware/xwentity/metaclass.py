@@ -8,7 +8,7 @@ implementation.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.1
+Version: 0.6.0.2
 Generation Date: 08-Nov-2025
 """
 
@@ -215,7 +215,7 @@ class DecoratorScanner:
     @staticmethod
 
     def _is_optional_type(annotation: Any) -> bool:
-        """Check if annotation is optional type (T | None or Union[T, None])."""
+        """Check if annotation is optional type (T | None or T | None)."""
         if annotation is None:
             return False
         try:

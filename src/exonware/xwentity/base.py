@@ -7,12 +7,12 @@ Following GUIDE_DEV.md: All abstract classes start with 'A' and extend 'I' inter
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.1
+Version: 0.6.0.2
 Generation Date: 08-Nov-2025
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable
+from typing import Any
 from datetime import datetime
 from pathlib import Path
 import asyncio
@@ -24,6 +24,7 @@ from exonware.xwdata import XWData
 # Import XWAction for type checking and validation
 from exonware.xwaction import XWAction
 from exonware.xwsystem.shared import XWObject
+from collections.abc import Callable
 from .contracts import (
     # Entity contracts
     IEntity,

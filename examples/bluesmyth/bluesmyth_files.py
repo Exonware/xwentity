@@ -9,7 +9,7 @@ so you can see the JSON-based approach separately from the class-based one.
 from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 from exonware.xwsystem import JsonSerializer
 from exonware.xwentity import XWEntity
 BASE_DIR = Path(__file__).resolve().parent
@@ -18,7 +18,7 @@ _JSON = JsonSerializer()
 # When writing JSON, use _JSON.save_file(data, path, indent=2) for readable output.
 
 
-def load_desc(type_name: str) -> Dict[str, Any]:
+def load_desc(type_name: str) -> dict[str, Any]:
     """Public wrapper around desc loader for a given logical type name."""
     path = DATA_DIR / f"{type_name}.desc.json"
     return _JSON.load_file(path)
@@ -30,7 +30,7 @@ def load_data(type_name: str) -> Any:
     return _JSON.load_file(path)
 
 
-def create_entity_from_type(type_name: str, index: Optional[int] = None) -> XWEntity:
+def create_entity_from_type(type_name: str, index: int | None = None) -> XWEntity:
     """
     Generic helper:
     - Loads schema/actions from <type_name>.desc.json.
@@ -70,16 +70,16 @@ class BluesmythEntityBundle:
     - A mapping of instantiated entities (if you want them).
     """
     type_name: str
-    desc: Dict[str, Any]
+    desc: dict[str, Any]
     data: Any
-    entities: List[XWEntity]
+    entities: list[XWEntity]
 
 
 class BluesmythEntities:
     """
     High-level access to all Bluesmyth entity types using file-based definitions.
     """
-    CORE_TYPES: Tuple[str, ...] = (
+    CORE_TYPES: tuple[str, ...] = (
         "bluesmyth.story",
         "bluesmyth.story_series",
         "bluesmyth.story_arc",
@@ -114,18 +114,18 @@ class BluesmythEntities:
     )
     @classmethod
 
-    def load_all(cls) -> Dict[str, BluesmythEntityBundle]:
+    def load_all(cls) -> dict[str, BluesmythEntityBundle]:
         """
         Load all known Bluesmyth types into memory.
         Returns:
             Mapping:
                 type_name -> BluesmythEntityBundle
         """
-        bundles: Dict[str, BluesmythEntityBundle] = {}
+        bundles: dict[str, BluesmythEntityBundle] = {}
         for type_name in cls.CORE_TYPES:
             desc = load_desc(type_name)
             data = load_data(type_name)
-            entities: List[XWEntity] = []
+            entities: list[XWEntity] = []
             if isinstance(data, list):
                 for row in data:
                     entities.append(
@@ -165,14 +165,14 @@ class BluesmythEntities:
         return create_entity_from_type("bluesmyth.world", index=0)
     @classmethod
 
-    def characters(cls) -> List[XWEntity]:
+    def characters(cls) -> list[XWEntity]:
         """Return all character entities."""
         desc = load_desc("bluesmyth.character")
         data = load_data("bluesmyth.character")
         schema = desc.get("schema")
         actions = desc.get("actions", {})
         entity_type = str(desc.get("meta", {}).get("entity_type") or "character").lower()
-        entities: List[XWEntity] = []
+        entities: list[XWEntity] = []
         if isinstance(data, list):
             for row in data:
                 entities.append(
@@ -185,14 +185,14 @@ class BluesmythEntities:
         return entities
     @classmethod
 
-    def quests(cls) -> List[XWEntity]:
+    def quests(cls) -> list[XWEntity]:
         """Return all quest entities (main + sub quests)."""
         desc = load_desc("bluesmyth.quest")
         data = load_data("bluesmyth.quest")
         schema = desc.get("schema")
         actions = desc.get("actions", {})
         entity_type = str(desc.get("meta", {}).get("entity_type") or "quest").lower()
-        entities: List[XWEntity] = []
+        entities: list[XWEntity] = []
         if isinstance(data, list):
             for row in data:
                 entities.append(
@@ -205,14 +205,14 @@ class BluesmythEntities:
         return entities
     @classmethod
 
-    def settlements(cls) -> List[XWEntity]:
+    def settlements(cls) -> list[XWEntity]:
         """Return all settlements (villages, cities, tower cities)."""
         desc = load_desc("bluesmyth.settlement")
         data = load_data("bluesmyth.settlement")
         schema = desc.get("schema")
         actions = desc.get("actions", {})
         entity_type = "settlement"
-        entities: List[XWEntity] = []
+        entities: list[XWEntity] = []
         if isinstance(data, list):
             for row in data:
                 entities.append(
@@ -225,14 +225,14 @@ class BluesmythEntities:
         return entities
     @classmethod
 
-    def countries(cls) -> List[XWEntity]:
+    def countries(cls) -> list[XWEntity]:
         """Return all country-level political units."""
         desc = load_desc("bluesmyth.country")
         data = load_data("bluesmyth.country")
         schema = desc.get("schema")
         actions = desc.get("actions", {})
         entity_type = "country"
-        entities: List[XWEntity] = []
+        entities: list[XWEntity] = []
         if isinstance(data, list):
             for row in data:
                 entities.append(

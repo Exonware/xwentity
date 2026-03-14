@@ -22,7 +22,7 @@ NOTE:
 from __future__ import annotations
 import copy
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 from exonware.xwsystem import JsonSerializer
 from exonware.xwentity import XWEntity
 BASE_DIR = Path(__file__).resolve().parent
@@ -30,8 +30,8 @@ DATA_DIR = BASE_DIR / "data"
 _JSON = JsonSerializer()
 # When writing JSON, use _JSON.save_file(data, path, indent=2) for readable output.
 # File-backed cache: type_name -> (data, mtime). Realtime link: reload when file changes.
-_data_cache: Dict[str, tuple[Any, float]] = {}
-_desc_cache: Dict[str, tuple[Dict[str, Any], float]] = {}
+_data_cache: dict[str, tuple[Any, float]] = {}
+_desc_cache: dict[str, tuple[dict[str, Any], float]] = {}
 
 
 def _get_data_path(type_name: str) -> Path:
@@ -52,7 +52,7 @@ def _file_mtime(path: Path) -> float:
         return 0.0
 
 
-def _load_desc(type_name: str) -> Dict[str, Any]:
+def _load_desc(type_name: str) -> dict[str, Any]:
     """
     Load a *.desc.json definition for a given logical type name.
     Cached with mtime check: reloads when file changes (realtime link).
@@ -98,7 +98,7 @@ def invalidate_bluesmyth_cache(type_name: str | None = None) -> None:
         _desc_cache.pop(type_name, None)
 
 
-def _create_entity_from_type(type_name: str, index: Optional[int] = None) -> XWEntity:
+def _create_entity_from_type(type_name: str, index: int | None = None) -> XWEntity:
     """
     Generic helper:
     - Loads schema/actions from <type_name>.desc.json.
@@ -146,8 +146,8 @@ class _BluesmythBaseEntity(XWEntity):
     """
     type_id: str = ""
     # Cache keyed by type_id so subclasses (e.g. Flashback) don't reuse parent (Story) schema
-    _schema_cache: Dict[str, Any] = {}
-    _actions_cache: Dict[str, Dict[str, Any]] = {}
+    _schema_cache: dict[str, Any] = {}
+    _actions_cache: dict[str, dict[str, Any]] = {}
     @classmethod
 
     def _ensure_schema_loaded(cls) -> None:
@@ -168,7 +168,7 @@ class _BluesmythBaseEntity(XWEntity):
         """Path to the *.data.json file for this entity type (realtime link target)."""
         return _get_data_path(cls.type_id)
 
-    def __init__(self, data: Dict[str, Any] | None = None, **extra):
+    def __init__(self, data: dict[str, Any] | None = None, **extra):
         """
         Initialize entity:
         - Ensures schema is loaded; sets schema $id so entity.type_id (XWEntity) works.
@@ -231,7 +231,7 @@ class Location(_BluesmythBaseEntity):
     type_id = "bluesmyth.location"
     @classmethod
 
-    def all(cls) -> List["Location"]:
+    def all(cls) -> list["Location"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -243,7 +243,7 @@ class Character(_BluesmythBaseEntity):
     type_id = "bluesmyth.character"
     @classmethod
 
-    def all(cls) -> List["Character"]:
+    def all(cls) -> list["Character"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -263,7 +263,7 @@ class Quest(Story):
     type_id = "bluesmyth.quest"
     @classmethod
 
-    def all(cls) -> List["Quest"]:
+    def all(cls) -> list["Quest"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -278,7 +278,7 @@ class StorySeries(Story):
     type_id = "bluesmyth.story_series"
     @classmethod
 
-    def all(cls) -> List["StorySeries"]:
+    def all(cls) -> list["StorySeries"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -290,7 +290,7 @@ class StoryArc(Story):
     type_id = "bluesmyth.story_arc"
     @classmethod
 
-    def all(cls) -> List["StoryArc"]:
+    def all(cls) -> list["StoryArc"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -302,7 +302,7 @@ class Scene(Story):
     type_id = "bluesmyth.scene"
     @classmethod
 
-    def all(cls) -> List["Scene"]:
+    def all(cls) -> list["Scene"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -314,7 +314,7 @@ class Event(Story):
     type_id = "bluesmyth.event"
     @classmethod
 
-    def all(cls) -> List["Event"]:
+    def all(cls) -> list["Event"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -326,7 +326,7 @@ class Flashback(Story):
     type_id = "bluesmyth.flashback"
     @classmethod
 
-    def all(cls) -> List["Flashback"]:
+    def all(cls) -> list["Flashback"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -338,7 +338,7 @@ class ContractEvent(Story):
     type_id = "bluesmyth.contract_event"
     @classmethod
 
-    def all(cls) -> List["ContractEvent"]:
+    def all(cls) -> list["ContractEvent"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -353,7 +353,7 @@ class Planet(World):
     type_id = "bluesmyth.planet"
     @classmethod
 
-    def all(cls) -> List["Planet"]:
+    def all(cls) -> list["Planet"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -365,7 +365,7 @@ class CrystalShell(_BluesmythBaseEntity):
     type_id = "bluesmyth.crystal_shell"
     @classmethod
 
-    def all(cls) -> List["CrystalShell"]:
+    def all(cls) -> list["CrystalShell"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -376,7 +376,7 @@ class TreeOfLife(_BluesmythBaseEntity):
     type_id = "bluesmyth.tree_of_life"
     @classmethod
 
-    def all(cls) -> List["TreeOfLife"]:
+    def all(cls) -> list["TreeOfLife"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -387,7 +387,7 @@ class Guardian(_BluesmythBaseEntity):
     type_id = "bluesmyth.guardian"
     @classmethod
 
-    def all(cls) -> List["Guardian"]:
+    def all(cls) -> list["Guardian"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -399,7 +399,7 @@ class PlanetGuardian(Guardian):
     type_id = "bluesmyth.planet_guardian"
     @classmethod
 
-    def all(cls) -> List["PlanetGuardian"]:
+    def all(cls) -> list["PlanetGuardian"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -410,7 +410,7 @@ class ArtificialTreeOfLife(_BluesmythBaseEntity):
     type_id = "bluesmyth.artificial_tree_of_life"
     @classmethod
 
-    def all(cls) -> List["ArtificialTreeOfLife"]:
+    def all(cls) -> list["ArtificialTreeOfLife"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -422,7 +422,7 @@ class Dungeon(Location):
     type_id = "bluesmyth.dungeon"
     @classmethod
 
-    def all(cls) -> List["Dungeon"]:
+    def all(cls) -> list["Dungeon"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -434,7 +434,7 @@ class Tower(Location):
     type_id = "bluesmyth.tower"
     @classmethod
 
-    def all(cls) -> List["Tower"]:
+    def all(cls) -> list["Tower"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -446,7 +446,7 @@ class DungeonFloor(Location):
     type_id = "bluesmyth.dungeon_floor"
     @classmethod
 
-    def all(cls) -> List["DungeonFloor"]:
+    def all(cls) -> list["DungeonFloor"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -458,7 +458,7 @@ class TowerFloor(Location):
     type_id = "bluesmyth.tower_floor"
     @classmethod
 
-    def all(cls) -> List["TowerFloor"]:
+    def all(cls) -> list["TowerFloor"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -470,7 +470,7 @@ class Settlement(Location):
     type_id = "bluesmyth.settlement"
     @classmethod
 
-    def all(cls) -> List["Settlement"]:
+    def all(cls) -> list["Settlement"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -481,7 +481,7 @@ class Organization(_BluesmythBaseEntity):
     type_id = "bluesmyth.organization"
     @classmethod
 
-    def all(cls) -> List["Organization"]:
+    def all(cls) -> list["Organization"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -493,7 +493,7 @@ class Country(Organization):
     type_id = "bluesmyth.country"
     @classmethod
 
-    def all(cls) -> List["Country"]:
+    def all(cls) -> list["Country"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -505,7 +505,7 @@ class Faction(Organization):
     type_id = "bluesmyth.faction"
     @classmethod
 
-    def all(cls) -> List["Faction"]:
+    def all(cls) -> list["Faction"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -516,7 +516,7 @@ class Race(_BluesmythBaseEntity):
     type_id = "bluesmyth.race"
     @classmethod
 
-    def all(cls) -> List["Race"]:
+    def all(cls) -> list["Race"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -531,7 +531,7 @@ class PlayerCharacter(Character):
     type_id = "bluesmyth.player_character"
     @classmethod
 
-    def all(cls) -> List["PlayerCharacter"]:
+    def all(cls) -> list["PlayerCharacter"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -543,7 +543,7 @@ class MainCharacter(Character):
     type_id = "bluesmyth.main_character"
     @classmethod
 
-    def all(cls) -> List["MainCharacter"]:
+    def all(cls) -> list["MainCharacter"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -557,7 +557,7 @@ class Item(_BluesmythBaseEntity):
     type_id = "bluesmyth.item"
     @classmethod
 
-    def all(cls) -> List["Item"]:
+    def all(cls) -> list["Item"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -568,7 +568,7 @@ class Contract(_BluesmythBaseEntity):
     type_id = "bluesmyth.contract"
     @classmethod
 
-    def all(cls) -> List["Contract"]:
+    def all(cls) -> list["Contract"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -579,7 +579,7 @@ class Monster(_BluesmythBaseEntity):
     type_id = "bluesmyth.monster"
     @classmethod
 
-    def all(cls) -> List["Monster"]:
+    def all(cls) -> list["Monster"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -590,7 +590,7 @@ class Era(_BluesmythBaseEntity):
     type_id = "bluesmyth.era"
     @classmethod
 
-    def all(cls) -> List["Era"]:
+    def all(cls) -> list["Era"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]
@@ -601,7 +601,7 @@ class War(_BluesmythBaseEntity):
     type_id = "bluesmyth.war"
     @classmethod
 
-    def all(cls) -> List["War"]:
+    def all(cls) -> list["War"]:
         data = _load_data(cls.type_id)
         if isinstance(data, list):
             return [cls(d) for d in data]

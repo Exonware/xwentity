@@ -10,7 +10,7 @@ Generation Date: 08-Nov-2025
 """
 
 import pytest
-from typing import Any, Optional
+from typing import Any
 
 
 @pytest.fixture(autouse=True)

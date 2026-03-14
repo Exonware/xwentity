@@ -49,6 +49,7 @@ full = [
 Homepage = "https://exonware.com"
 Documentation = "https://github.com/exonware/xwentity#readme"
 Repository = "https://github.com/exonware/xwentity"
+Subtree = "https://github.com/exonware/xwentity.git"
 
 [tool.black]
 line-length = 88
@@ -61,7 +62,7 @@ profile = "black"
 line_length = 88
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "0.6.0.1"
 strict = true
 warn_return_any = true
 warn_unused_configs = true

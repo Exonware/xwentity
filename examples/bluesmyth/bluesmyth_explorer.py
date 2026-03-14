@@ -20,9 +20,9 @@ Usage:
 """
 
 from __future__ import annotations
+from collections.abc import Callable
 import sys
 from pathlib import Path
-from typing import Callable
 # Run from bluesmyth directory so local import works
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:

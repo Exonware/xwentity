@@ -7,7 +7,7 @@ GUIDE_DEV.md standards. Integrates with xwsystem config system.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.1
+Version: 0.6.0.2
 Generation Date: 08-Nov-2025
 """
 

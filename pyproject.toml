@@ -70,6 +70,7 @@
     Homepage = "https://exonware.com"
     Documentation = "https://github.com/exonware/xwentity#readme"
     Repository = "https://github.com/exonware/xwentity"
+    Subtree = "https://github.com/exonware/xwentity.git"
 
 [tool]
 
@@ -82,7 +83,7 @@
     line_length = 88
 
   [tool.mypy]
-    python_version = "0.6.0.1"
+    python_version = "0.6.0.2"
     strict = true
     warn_return_any = true
     warn_unused_configs = true
