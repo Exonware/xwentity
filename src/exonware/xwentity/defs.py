@@ -7,13 +7,12 @@ Merged from both xwobject and xwentity to support unified XWEntity class.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 28-Jan-2026
 """
 
 from __future__ import annotations
 from typing import Any, Protocol, runtime_checkable
-from datetime import datetime
 from enum import Enum
 # ==============================================================================
 # TYPE ALIASES (Unified - Entity types are primary, Object types are aliases)

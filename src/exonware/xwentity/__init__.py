@@ -13,7 +13,7 @@ This library provides a unified entity system that combines:
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 28-Jan-2026
 """
 

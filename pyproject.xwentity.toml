@@ -1,4 +1,4 @@
-# Source size (src/*): ~204.0 KB
+# Source size (src/*): ~204.2 KB
 [build-system]
 requires = [
     "hatchling",
@@ -27,9 +27,11 @@ classifiers = []
 dependencies = [
     "exonware-xwentity",
 ]
-authors = [
-    { name = "eXonware Backend Team", email = "connect@exonware.com" },
-]
+exonware-xwaction = "356878 ; 0.34 MB"
+exonware-xwdata = "514480 ; 0.49 MB"
+exonware-xwschema = "359128 ; 0.34 MB"
+authors = []
+"{ name" = "eXonware Backend Team"
 
 [project.license]
 text = "MIT"
@@ -38,11 +40,95 @@ text = "MIT"
 dev = [
     "exonware-xwentity[dev]",
 ]
+"black>" = [
+    "exonware-xwentity[black>]",
+]
+"exonware-xwaction[dev]" = [
+    "exonware-xwentity[exonware-xwaction[dev]]",
+]
+"exonware-xwdata[dev]" = [
+    "exonware-xwentity[exonware-xwdata[dev]]",
+]
+exonware-xwlazy = [
+    "exonware-xwentity[exonware-xwlazy]",
+]
+"exonware-xwschema[dev]" = [
+    "exonware-xwentity[exonware-xwschema[dev]]",
+]
+"isort>" = [
+    "exonware-xwentity[isort>]",
+]
+"mypy>" = [
+    "exonware-xwentity[mypy>]",
+]
+"pytest>" = [
+    "exonware-xwentity[pytest>]",
+]
+"pytest-asyncio>" = [
+    "exonware-xwentity[pytest-asyncio>]",
+]
+"pytest-cov>" = [
+    "exonware-xwentity[pytest-cov>]",
+]
 lazy = [
     "exonware-xwentity[lazy]",
 ]
+"exonware-xwaction[lazy]" = [
+    "exonware-xwentity[exonware-xwaction[lazy]]",
+]
+"exonware-xwdata[lazy]" = [
+    "exonware-xwentity[exonware-xwdata[lazy]]",
+]
+"exonware-xwschema[lazy]" = [
+    "exonware-xwentity[exonware-xwschema[lazy]]",
+]
 full = [
     "exonware-xwentity[full]",
+]
+atomicwrites = [
+    "exonware-xwentity[atomicwrites]",
+]
+bottleneck = [
+    "exonware-xwentity[bottleneck]",
+]
+cloudpickle = [
+    "exonware-xwentity[cloudpickle]",
+]
+cython = [
+    "exonware-xwentity[cython]",
+]
+"exonware-xwaction[full]" = [
+    "exonware-xwentity[exonware-xwaction[full]]",
+]
+"exonware-xwdata[full]" = [
+    "exonware-xwentity[exonware-xwdata[full]]",
+]
+"exonware-xwschema[full]" = [
+    "exonware-xwentity[exonware-xwschema[full]]",
+]
+interegular = [
+    "exonware-xwentity[interegular]",
+]
+lz4 = [
+    "exonware-xwentity[lz4]",
+]
+numexpr = [
+    "exonware-xwentity[numexpr]",
+]
+pandas = [
+    "exonware-xwentity[pandas]",
+]
+pyarrow = [
+    "exonware-xwentity[pyarrow]",
+]
+pytz = [
+    "exonware-xwentity[pytz]",
+]
+regex = [
+    "exonware-xwentity[regex]",
+]
+uarray = [
+    "exonware-xwentity[uarray]",
 ]
 
 [project.urls]
@@ -62,7 +148,7 @@ profile = "black"
 line_length = 88
 
 [tool.mypy]
-python_version = "0.6.0.1"
+python_version = "3.12"
 strict = true
 warn_return_any = true
 warn_unused_configs = true

@@ -17,7 +17,6 @@ from exonware.xwentity import (
     XWEntityValidationError,
     XWEntityStateError,
     XWEntityActionError,
-    XWEntityDataError,
     EntityState
 )
 from exonware.xwschema import XWSchema

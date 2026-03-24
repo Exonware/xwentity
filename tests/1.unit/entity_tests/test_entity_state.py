@@ -139,7 +139,7 @@ class TestEntityState:
         """Test state is preserved in serialization."""
         entity = XWEntity(data={})
         entity.transition_to(EntityState.VALIDATED)
-        original_state = entity._metadata.state
+        entity._metadata.state
         import tempfile
         from pathlib import Path
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:

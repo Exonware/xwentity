@@ -11,7 +11,6 @@ Generation Date: 28-Jan-2026
 
 from __future__ import annotations
 import pytest
-from exonware.xwentity import XWEntity
 @pytest.mark.xwentity_core
 
 class TestCoreExtensions:

@@ -21,7 +21,6 @@ from exonware.xwentity import (
     XWEntityActionError,
 )
 from exonware.xwentity.contracts import ICollection, IGroup
-from exonware.xwschema import XWSchema
 
 
 @pytest.mark.xwentity_core

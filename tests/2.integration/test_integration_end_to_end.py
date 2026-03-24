@@ -121,6 +121,7 @@ class TestIntegrationEndToEnd:
             )
             loaded.load(temp_path)
             assert loaded.get("name") == "Test"
-            assert loaded.get("data") == {"key": "value"}
+            # Graph manager stores nested object fields under nodes.* after load/save
+            assert loaded.get("nodes.data") == {"key": "value"}
         finally:
             temp_path.unlink(missing_ok=True)

@@ -15,7 +15,7 @@ by higher-level libraries (e.g. xwmodels) that may wrap or extend this class.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 05-Mar-2026
 """
 
@@ -51,9 +51,9 @@ class XWGroup(XWObject, AGroup):
     def __init__(
         self,
         object_id: str,
-        title: "str | None" = None,
-        description: "str | None" = None,
-        parent: "XWGroup | None" = None,
+        title: str | None = None,
+        description: str | None = None,
+        parent: XWGroup | None = None,
     ) -> None:
         """
         Initialize a group scope.
@@ -73,8 +73,8 @@ class XWGroup(XWObject, AGroup):
             self._description = description
         self._created_at = datetime.now()
         self._updated_at = self._created_at
-        self._parent: "XWGroup | None" = parent
-        self._subgroups: dict[str, "XWGroup"] = {}
+        self._parent: XWGroup | None = parent
+        self._subgroups: dict[str, XWGroup] = {}
         self._collections: dict[str, XWCollection[Any]] = {}
         # Group-level actions (multi-collection operations, maintenance, etc.)
         self._actions: dict[str, Any] = {}
@@ -94,12 +94,12 @@ class XWGroup(XWObject, AGroup):
     # Hierarchy
     # -------------------------------------------------------------------------
     @property
-    def parent(self) -> "XWGroup | None":
+    def parent(self) -> XWGroup | None:
         """Get parent group, if any."""
         return self._parent
 
     @property
-    def subgroups(self) -> dict[str, "XWGroup"]:
+    def subgroups(self) -> dict[str, XWGroup]:
         """Get subgroups by id."""
         return dict(self._subgroups)
 
@@ -134,7 +134,7 @@ class XWGroup(XWObject, AGroup):
             return True
         return False
 
-    def get_collection(self, collection_id: str) -> "XWCollection[Any] | None":
+    def get_collection(self, collection_id: str) -> XWCollection[Any] | None:
         """Get a collection by id, if present."""
         return self._collections.get(collection_id)
 
@@ -150,7 +150,7 @@ class XWGroup(XWObject, AGroup):
         """Iterate over all collections in this group."""
         return self._collections.values()
 
-    def iter_subgroups(self) -> Iterable["XWGroup"]:
+    def iter_subgroups(self) -> Iterable[XWGroup]:
         """Iterate over all direct subgroups."""
         return self._subgroups.values()
 
@@ -204,11 +204,9 @@ class XWGroup(XWObject, AGroup):
     # -------------------------------------------------------------------------
     def save(self, *args: Any, **kwargs: Any) -> None:
         """Storage-agnostic: no-op. Persistence is implemented by xwmodels (XWModelGroup)."""
-        pass
 
     def load(self, *args: Any, **kwargs: Any) -> None:
         """Storage-agnostic: no-op. Persistence is implemented by xwmodels (XWModelGroup)."""
-        pass
 
     # -------------------------------------------------------------------------
     # Actions

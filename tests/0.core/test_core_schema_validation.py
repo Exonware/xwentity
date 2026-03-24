@@ -10,8 +10,7 @@ Generation Date: 08-Nov-2025
 """
 
 import pytest
-from exonware.xwentity import XWEntity, XWEntityValidationError
-from exonware.xwschema import XWSchema
+from exonware.xwentity import XWEntity
 from exonware.xwdata import XWData
 @pytest.mark.xwentity_core
 

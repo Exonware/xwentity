@@ -23,6 +23,23 @@ def clear_entity_cache_between_tests():
         pass
     yield
 
+
+@pytest.fixture(autouse=True)
+def restore_global_entity_config():
+    """Prevent cross-test pollution from global XWEntity config mutations."""
+    try:
+        from exonware.xwentity.config import get_config, set_config, XWEntityConfig
+        snapshot = XWEntityConfig.from_dict(get_config().to_dict())
+    except Exception:
+        snapshot = None
+    yield
+    if snapshot is not None:
+        try:
+            from exonware.xwentity.config import set_config
+            set_config(snapshot)
+        except Exception:
+            pass
+
 # Lazy imports: avoid pulling xwsystem heavy optional deps until fixtures are used.
 # If ImportError occurs when a fixture runs, install the missing dep (e.g. msgspec)
 # or use pip install -e ".[full]" for full xwsystem optional deps.
@@ -86,7 +103,7 @@ def sample_entity(sample_schema, sample_xwdata):
 def sample_action():
     """Create a sample XWAction for testing."""
     XWAction = _import_xwaction()
-    XWEntity = _import_xwentity()
+    _import_xwentity()
 
     @XWAction(api_name="get_name", profile="query")
     def get_name_action(obj) -> str:
@@ -100,7 +117,7 @@ def action_with_schema():
     """Create an action with input/output schema validation."""
     XWSchema = _import_xwschema()
     XWAction = _import_xwaction()
-    XWEntity = _import_xwentity()
+    _import_xwentity()
 
     @XWAction(
         api_name="update_age",

@@ -11,8 +11,7 @@ Generation Date: 08-Nov-2025
 
 import pytest
 from exonware.xwentity import XWEntity, XWEntityActionError, XWEntityValidationError
-from exonware.xwschema import XWSchema, XWSchemaValidationError
-from exonware.xwdata import XWData
+from exonware.xwschema import XWSchemaValidationError
 from exonware.xwaction import XWAction
 @pytest.mark.xwentity_core
 

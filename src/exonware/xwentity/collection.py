@@ -15,7 +15,7 @@ by higher-level libraries (e.g. xwmodels) that may wrap or extend this class.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 05-Mar-2026
 """
 
@@ -52,9 +52,9 @@ class XWCollection[TEntity: XWEntity](XWObject, ACollection):
         self,
         object_id: str,
         entity_type: type[TEntity] | str,
-        group: "XWGroup | None" = None,
-        title: "str | None" = None,
-        description: "str | None" = None,
+        group: XWGroup | None = None,
+        title: str | None = None,
+        description: str | None = None,
     ) -> None:
         """
         Initialize a collection scope.
@@ -70,7 +70,7 @@ class XWCollection[TEntity: XWEntity](XWObject, ACollection):
         ACollection.__init__(self, entity_type=entity_type)
         # Ensure identity is set (in case MRO or package resolution differs)
         self._id = object_id if object_id else None
-        self._group: "XWGroup | None" = group
+        self._group: XWGroup | None = group
         if title:
             self._title = title
         if description:
@@ -95,12 +95,12 @@ class XWCollection[TEntity: XWEntity](XWObject, ACollection):
         return self._entity_type
 
     @property
-    def group(self) -> "XWGroup | None":
+    def group(self) -> XWGroup | None:
         """Get the owning group scope, if any."""
         return self._group
 
     @group.setter
-    def group(self, value: "XWGroup | None") -> None:
+    def group(self, value: XWGroup | None) -> None:
         """Set or change the owning group scope."""
         self._group = value
         self._updated_at = datetime.now()
@@ -163,11 +163,9 @@ class XWCollection[TEntity: XWEntity](XWObject, ACollection):
     # -------------------------------------------------------------------------
     def save(self, *args: Any, **kwargs: Any) -> None:
         """Storage-agnostic: no-op. Persistence is implemented by xwmodels (XWModelCollection)."""
-        pass
 
     def load(self, *args: Any, **kwargs: Any) -> None:
         """Storage-agnostic: no-op. Persistence is implemented by xwmodels (XWModelCollection)."""
-        pass
 
     # -------------------------------------------------------------------------
     # Actions

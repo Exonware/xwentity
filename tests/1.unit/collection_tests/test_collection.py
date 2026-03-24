@@ -19,7 +19,6 @@ from exonware.xwentity import (
     XWCollection,
     XWGroup,
     XWEntityActionError,
-    XWEntityValidationError,
 )
 from exonware.xwentity.contracts import ICollection
 from exonware.xwentity.base import ACollection

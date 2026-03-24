@@ -7,7 +7,7 @@ Re-exports contracts, base, entity, errors, config, and defs.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 29-Jan-2026
 """
 

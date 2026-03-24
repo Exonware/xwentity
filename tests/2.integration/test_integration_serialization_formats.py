@@ -14,6 +14,7 @@ import pytest
 import tempfile
 from pathlib import Path
 from exonware.xwentity import XWEntity
+from exonware.xwentity.defs import EntityState
 from exonware.xwschema import XWSchema
 @pytest.mark.xwentity_integration
 
@@ -168,9 +169,9 @@ class TestIntegrationSerializationFormats:
 
     def test_serialization_with_metadata(self, comprehensive_entity):
         """Test serialization preserves metadata."""
-        comprehensive_entity.transition_to("VALIDATED")
-        original_id = comprehensive_entity.id
-        original_state = comprehensive_entity._metadata.state
+        comprehensive_entity.transition_to(EntityState.VALIDATED)
+        comprehensive_entity.id
+        comprehensive_entity._metadata.state
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             temp_path = Path(f.name)
         try:

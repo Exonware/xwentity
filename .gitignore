@@ -288,3 +288,5 @@ credentials.json
 xwlazy.lock.toml
 xwlazy_sbom.toml
 
+
+.examples/

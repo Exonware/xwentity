@@ -12,7 +12,6 @@ Generation Date: 05-Mar-2026
 from __future__ import annotations
 
 import pytest
-from typing import Any
 from datetime import datetime
 from exonware.xwentity import (
     XWCollection,

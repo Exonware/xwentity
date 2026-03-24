@@ -206,8 +206,8 @@ class TestCoreSerializationRoundtrip:
 
     def test_roundtrip_preserves_metadata(self, complex_entity):
         """Test that roundtrip preserves entity metadata."""
-        original_id = complex_entity.id
-        original_created = complex_entity.created_at
+        complex_entity.id
+        complex_entity.created_at
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             temp_path = Path(f.name)
         try:

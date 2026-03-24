@@ -12,7 +12,7 @@ stored/loaded without XWEntity depending on xwstorage or auth.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 28-Jan-2026
 """
 
@@ -21,16 +21,14 @@ from typing import Any
 from datetime import datetime
 from pathlib import Path
 from exonware.xwsystem import get_logger
-from exonware.xwsystem.validation import validate_untrusted_data
 from exonware.xwdata import XWData
 from exonware.xwnode import XWNode
 from exonware.xwnode.defs import NodeMode, EdgeMode
 from exonware.xwnode.facades.graph import XWNodeGraph
 from exonware.xwschema import XWSchema
 from exonware.xwaction import XWAction, extract_actions
-from .base import AEntity, XWEntityMetadata
-from .contracts import IEntity
-from .defs import EntityState, EntityID, EntityType, EntityData, PerformanceMode
+from .base import AEntity
+from .defs import EntityState, EntityData, PerformanceMode
 from .metaclass import (
     DecoratorScanner,
     _create_direct_property,
@@ -40,7 +38,6 @@ from .metaclass import (
 from .errors import (
     XWEntityError,
     XWEntityValidationError,
-    XWEntityStateError,
     XWEntityActionError,
 )
 from .config import XWEntityConfig, get_config
@@ -671,7 +668,7 @@ class XWEntity(AEntity):
         entity_type: str | None = None,
         config: XWEntityConfig | None = None,
         **kwargs
-    ) -> "XWEntity":
+    ) -> XWEntity:
         """
         Create entity from dictionary with validation.
         Args:
@@ -726,7 +723,7 @@ class XWEntity(AEntity):
             )
     @classmethod
 
-    def from_native(cls, data: EntityData, schema: Any | None = None, entity_type: str | None = None, **kwargs) -> "XWEntity":
+    def from_native(cls, data: EntityData, schema: Any | None = None, entity_type: str | None = None, **kwargs) -> XWEntity:
         """
         Create entity from native Python dictionary.
         Similar to XWData.from_native(), this creates an XWEntity from a dictionary
@@ -755,7 +752,16 @@ class XWEntity(AEntity):
         Returns:
             Value at path or default
         """
-        return self._get(path, default)
+        sentinel = object()
+        value = self._get(path, sentinel)
+        if value is not sentinel:
+            return value
+        # Graph-enabled backends may keep business fields under `nodes`.
+        # Provide transparent fallback so callers can still use flat paths.
+        value = self._get(f"nodes.{path}", sentinel)
+        if value is not sentinel:
+            return value
+        return default
 
     def set(self, path: str, value: Any) -> None:
         """
@@ -1145,17 +1151,22 @@ class XWEntity(AEntity):
         if isinstance(data, (str, Path)) and Path(data).exists():
             self.load(data, format='yaml', **options)
         else:
-            from exonware.xwsystem.io.serialization import get_serialization_registry
-            registry = get_serialization_registry()
-            serializer = registry.get_by_format('yaml')
-            if serializer:
-                loaded = serializer.decode(str(data), **options)
-                if isinstance(loaded, dict):
-                    self._from_dict(loaded)
-                else:
-                    raise XWEntityError(f"Invalid YAML data: expected dict, got {type(loaded).__name__}")
+            text = str(data)
+            # Prefer PyYAML direct parsing to avoid parser-registry grammar mismatches.
+            try:
+                import yaml as _pyyaml  # type: ignore[import-not-found]
+                loaded = _pyyaml.safe_load(text)
+            except Exception:
+                from exonware.xwsystem.io.serialization import get_serialization_registry
+                registry = get_serialization_registry()
+                serializer = registry.get_by_format('yaml')
+                if not serializer:
+                    raise XWEntityError("YAML serializer not available")
+                loaded = serializer.decode(text, **options)
+            if isinstance(loaded, dict):
+                self._from_dict(loaded)
             else:
-                raise XWEntityError("YAML serializer not available")
+                raise XWEntityError(f"Invalid YAML data: expected dict, got {type(loaded).__name__}")
 
     def from_toml(self, data: str | Path, **options) -> None:
         """Import entity from TOML string or file. Reuses xwdata's serialization approach."""
@@ -1163,17 +1174,22 @@ class XWEntity(AEntity):
         if isinstance(data, (str, Path)) and Path(data).exists():
             self.load(data, format='toml', **options)
         else:
-            from exonware.xwsystem.io.serialization import get_serialization_registry
-            registry = get_serialization_registry()
-            serializer = registry.get_by_format('toml')
-            if serializer:
-                loaded = serializer.decode(str(data), **options)
-                if isinstance(loaded, dict):
-                    self._from_dict(loaded)
-                else:
-                    raise XWEntityError(f"Invalid TOML data: expected dict, got {type(loaded).__name__}")
+            text = str(data)
+            # Prefer stdlib TOML parser first for deterministic behavior.
+            try:
+                import tomllib
+                loaded = tomllib.loads(text)
+            except Exception:
+                from exonware.xwsystem.io.serialization import get_serialization_registry
+                registry = get_serialization_registry()
+                serializer = registry.get_by_format('toml')
+                if not serializer:
+                    raise XWEntityError("TOML serializer not available")
+                loaded = serializer.decode(text, **options)
+            if isinstance(loaded, dict):
+                self._from_dict(loaded)
             else:
-                raise XWEntityError("TOML serializer not available")
+                raise XWEntityError(f"Invalid TOML data: expected dict, got {type(loaded).__name__}")
 
     def from_xml(self, data: str | Path, **options) -> None:
         """Import entity from XML string or file. Reuses xwdata's serialization approach."""
@@ -1226,7 +1242,7 @@ class XWEntity(AEntity):
     # PERFORMANCE OPTIMIZATION (public API from XWEntity)
     # ==========================================================================
 
-    def optimize_for_access(self) -> "XWEntity":
+    def optimize_for_access(self) -> XWEntity:
         """
         Optimize the entity for fast access operations (public API).
         Returns:
@@ -1235,7 +1251,7 @@ class XWEntity(AEntity):
         self._optimize_for_access()
         return self
 
-    def optimize_for_validation(self) -> "XWEntity":
+    def optimize_for_validation(self) -> XWEntity:
         """
         Optimize the entity for fast validation operations (public API).
         Returns:
@@ -1244,7 +1260,7 @@ class XWEntity(AEntity):
         self._optimize_for_validation()
         return self
 
-    def optimize_memory(self) -> "XWEntity":
+    def optimize_memory(self) -> XWEntity:
         """
         Optimize memory usage (public API).
         Returns:
@@ -1272,7 +1288,7 @@ class XWEntity(AEntity):
     # EXTENSIBILITY (public API from XWEntity)
     # ==========================================================================
 
-    def register_extension(self, name: str, extension: Any) -> "XWEntity":
+    def register_extension(self, name: str, extension: Any) -> XWEntity:
         """
         Register an extension with the entity (public API).
         Args:

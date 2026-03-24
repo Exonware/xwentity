@@ -11,8 +11,6 @@ Generation Date: 08-Nov-2025
 
 import pytest
 from exonware.xwentity import XWEntity
-from exonware.xwschema import XWSchema
-from exonware.xwdata import XWData
 from exonware.xwaction import XWAction
 @pytest.mark.xwentity_core
 

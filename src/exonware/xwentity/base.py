@@ -7,24 +7,21 @@ Following GUIDE_DEV.md: All abstract classes start with 'A' and extend 'I' inter
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 08-Nov-2025
 """
 
 from abc import ABC, abstractmethod
 from typing import Any
 from datetime import datetime
-from pathlib import Path
 import asyncio
 import threading
 import uuid
-from collections.abc import MutableMapping
 from exonware.xwsystem import get_logger
 from exonware.xwdata import XWData
 # Import XWAction for type checking and validation
 from exonware.xwaction import XWAction
 from exonware.xwsystem.shared import XWObject
-from collections.abc import Callable
 from .contracts import (
     # Entity contracts
     IEntity,
@@ -56,7 +53,6 @@ from .errors import (
     XWEntityValidationError,
     XWEntityStateError,
     XWEntityActionError,
-    XWEntityDataError,
 )
 from .config import get_config
 from exonware.xwsystem import LRUCache
@@ -297,7 +293,6 @@ def clear_entity_cache() -> None:
     @abstractmethod
     def _init_data_from_dict(self, data: ObjectData) -> None:
         """Initialize data from dictionary. Must be implemented by subclass."""
-        pass
 # ==============================================================================
 # ENTITY METADATA
 # ==============================================================================
@@ -438,7 +433,6 @@ class ADataBackedObject(ABC):
 
     def _apply_data_from_dict(self, data: dict[str, Any]) -> None:
         """Restore scalar state from dict. Subclass overrides as needed."""
-        pass
 
     def _init_data_backed(self) -> None:
         """Call from subclass __init__. Sets _data_backed from _build_data_payload()."""
@@ -491,7 +485,6 @@ class AGroup(ADataBackedObject):
     common type for group implementations (like XWGroup).
     """
 
-    pass
 
 
 # ==============================================================================
@@ -582,7 +575,6 @@ class AEntity(ADataBackedObject, XWObject, IEntity, IEntityState, IEntitySeriali
 
     def data(self) -> Any:  # XWData type
         """Get the entity data. Must be implemented by subclass."""
-        pass
     @property
 
     def state(self) -> EntityState:
@@ -657,7 +649,7 @@ class AEntity(ADataBackedObject, XWObject, IEntity, IEntityState, IEntitySeriali
         # Fallback: Use XWData's async get() method via sync bridge
         if isinstance(self._data, XWData) and hasattr(self._data, "get"):
             try:
-                loop = asyncio.get_running_loop()
+                asyncio.get_running_loop()
                 logger.debug("Cannot use async get() in sync context with running loop")
                 return default
             except RuntimeError:
@@ -699,7 +691,7 @@ class AEntity(ADataBackedObject, XWObject, IEntity, IEntityState, IEntitySeriali
         elif isinstance(self._data, XWData) and hasattr(self._data, "set"):
             # Fallback: Use XWData's async set() method via sync bridge
             try:
-                loop = asyncio.get_running_loop()
+                asyncio.get_running_loop()
                 logger.debug("Cannot use async set() in sync context with running loop")
                 raise XWEntityError("Cannot set value: async context required. Use async API.")
             except RuntimeError:
@@ -762,7 +754,7 @@ class AEntity(ADataBackedObject, XWObject, IEntity, IEntityState, IEntitySeriali
         elif isinstance(self._data, XWData) and hasattr(self._data, "delete"):
             # Fallback: Use XWData's async delete() method via sync bridge
             try:
-                loop = asyncio.get_running_loop()
+                asyncio.get_running_loop()
                 logger.debug("Cannot use async delete() in sync context with running loop")
                 raise XWEntityError("Cannot delete value: async context required. Use async API.")
             except RuntimeError:
@@ -824,7 +816,6 @@ class AEntity(ADataBackedObject, XWObject, IEntity, IEntityState, IEntitySeriali
 
     def _init_data_from_dict(self, data: EntityData) -> None:
         """Initialize data from dictionary. Must be implemented by subclass."""
-        pass
     # ==========================================================================
     # ACTIONS (dict with action name as key, IAction as value)
     # ==========================================================================
@@ -1067,7 +1058,6 @@ class AEntity(ADataBackedObject, XWObject, IEntity, IEntityState, IEntitySeriali
         Save entity to storage.
         Must be implemented by subclass.
         """
-        pass
     @abstractmethod
 
     def load(self, *args, **kwargs) -> None:
@@ -1075,7 +1065,6 @@ class AEntity(ADataBackedObject, XWObject, IEntity, IEntityState, IEntitySeriali
         Load entity from storage.
         Must be implemented by subclass.
         """
-        pass
     # ==========================================================================
     # PERFORMANCE OPTIMIZATION
     # ==========================================================================

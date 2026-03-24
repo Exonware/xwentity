@@ -11,7 +11,7 @@ Generation Date: 28-Jan-2026
 
 from __future__ import annotations
 import pytest
-from exonware.xwentity import XWEntity, XWEntityConfig, XWEntityError
+from exonware.xwentity import XWEntity, XWEntityConfig
 from exonware.xwschema import XWSchema
 from exonware.xwdata import XWData
 from exonware.xwaction import XWAction

@@ -7,21 +7,19 @@ GUIDE_DEV.md standards. All interfaces use 'I' prefix.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.2
+Version: 0.6.0.3
 Generation Date: 08-Nov-2025
 """
 
 from __future__ import annotations
 from typing import Any, Protocol, runtime_checkable, TYPE_CHECKING
 from pathlib import Path
-from datetime import datetime
 from exonware.xwsystem.shared import IObject
 from exonware.xwdata.contracts import IData
 from exonware.xwschema.contracts import ISchema
 from exonware.xwaction.contracts import IAction
 from .defs import (
     EntityType,
-    EntityID,
     EntityData,
     EntityState,
 )

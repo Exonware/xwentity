@@ -18,7 +18,6 @@ Usage:
 import sys
 import subprocess
 from pathlib import Path
-from datetime import datetime
 # Configure UTF-8 encoding for Windows console
 from exonware.xwsystem.console.cli import ensure_utf8_console
 ensure_utf8_console()

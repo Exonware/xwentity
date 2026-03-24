@@ -14,6 +14,7 @@ import pytest
 import tempfile
 from pathlib import Path
 from exonware.xwentity import XWEntity
+from exonware.xwentity.defs import EntityState
 from exonware.xwschema import XWSchema
 from exonware.xwaction import XWAction
 @pytest.mark.xwentity_integration
@@ -51,7 +52,7 @@ class TestIntegrationSerializationComprehensive:
         # Add extension
         entity.register_extension("cache", {"enabled": True})
         # State transition
-        entity.transition_to("VALIDATED")
+        entity.transition_to(EntityState.VALIDATED)
         return entity
     @pytest.mark.parametrize("format_name", [
         "json", "yaml", "toml", "xml", "xwjson", "msgpack", "pickle", "bson", "cbor", "ubjson"

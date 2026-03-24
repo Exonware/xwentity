@@ -13,8 +13,6 @@ import pytest
 import tempfile
 from pathlib import Path
 from exonware.xwentity import XWEntity
-from exonware.xwschema import XWSchema
-from exonware.xwdata import XWData
 @pytest.mark.xwentity_core
 
 class TestCoreFormatImportExport:
@@ -28,7 +26,7 @@ class TestCoreFormatImportExport:
             sample_object.save(temp_path)
             assert Path(temp_path).exists()
             # Verify file contains JSON
-            with open(temp_path, 'r') as f:
+            with open(temp_path) as f:
                 content = f.read()
                 assert '"name"' in content or '"Alice"' in content
         finally:
@@ -198,7 +196,6 @@ class TestCoreFormatImportExport:
             sample_object.save(temp_path)
             # Load into new object
             from exonware.xwentity import XWEntity
-            from exonware.xwschema import XWSchema
             loaded_obj = XWEntity(schema=sample_object.schema)
             loaded_obj.load(temp_path)
             # Verify data preserved
