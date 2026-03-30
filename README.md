@@ -46,6 +46,13 @@ See [docs/](docs/) for metadata, state, and REF_* files.
 | **Integration** | xwschema, xwaction, xwdata, XWNode. |
 | **Lifecycle** | State and property discovery. |
 
+## Core model (explicit roles)
+
+- **XWEntity** (`entity.py`) composes `XWSchema` + `XWAction` + `XWData`: validation contract, entity-scoped behavior, and multi-format data payloads.
+- **XWCollection** (`collection.py`) is a logical, storage-agnostic collection of entities of the same type, with collection-level actions (search/bulk operations).
+- **XWGroup** (`group.py`) manages multiple collections and supports nested parent/child groups, forming a tree structure for organization.
+- **Shared foundation:** `XWCollection` and `XWGroup` directly extend `XWObject` (`xwsystem`), and `XWEntity` extends `AEntity` which extends `XWObject`, so all core entity types inherit the same lightweight identity/object base.
+
 ---
 
 ## Docs and tests
@@ -67,6 +74,6 @@ MIT - see [LICENSE](LICENSE). **Homepage:** https://exonware.com · **Repository
 - Source validation: 4 async def definitions and 1 await usages under src/.
 - Use async APIs for I/O-heavy or concurrent workloads to improve throughput and responsiveness.
 <!-- async-support:end -->
-Version: 0.6.0.4 | Updated: 31-Mar-2026
+Version: 0.6.0.5 | Updated: 31-Mar-2026
 
 *Built with ❤️ by eXonware.com - Revolutionizing Python Development Since 2025*
