@@ -13,11 +13,23 @@ This library provides a unified entity system that combines:
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.3
+Version: 0.6.0.4
 Generation Date: 28-Jan-2026
 """
 
 from __future__ import annotations
+
+# XWLAZY — GUIDE_00_MASTER: register lazy install before heavy exonware imports
+try:
+    from xwlazy.lazy import config_package_lazy_install_enabled
+
+    config_package_lazy_install_enabled(
+        __package__ or "exonware.xwentity",
+        enabled=True,
+        mode="smart",
+    )
+except ImportError:
+    pass
 
 # Public API from facade (GUIDE_13_ARCH, GUIDE_32_DEV_PY)
 from exonware.xwentity.facade import (

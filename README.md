@@ -1,9 +1,8 @@
 # xwentity
 
-**Unified entity system.** Schema (xwschema), actions (xwaction), data (xwdata); metadata, caching, state management; XWNode integration. Used by xwmodels, xwbase, and the eXonware stack. Per project docs.
+**Unified entity layer.** Ties schema (xwschema), actions (xwaction), and data (xwdata) together with metadata, caching, state, and XWNode. Used by xwmodels, xwbase, and the rest of the eXonware stack. Details live in `docs/`.
 
 **Company:** eXonware.com · **Author:** eXonware Backend Team · **Email:** connect@exonware.com  
-**Version:** (see pyproject/version) · **Updated:** See [version.py](src/exonware/xwentity/version.py) (`__date__`)
 
 [![Status](https://img.shields.io/badge/status-beta-blue.svg)](https://exonware.com)
 [![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org)
@@ -15,7 +14,12 @@
 
 ```bash
 pip install exonware-xwentity
+pip install exonware-xwentity[lazy]
+# Full stack used by xwentity flows
+pip install exonware-xwentity[full]
 ```
+
+`[full]` pulls the full variants of: `xwsystem`, `xwaction`, `xwdata`, `xwquery`, `xwschema`, and `xwnode`.
 
 ---
 
@@ -30,7 +34,7 @@ entity = XWEntity(schema=schema, data={"name": "Alice", "age": 30})
 print(entity.data["name"])
 ```
 
-See [docs/](docs/) for metadata, state, and REF_* when present.
+See [docs/](docs/) for metadata, state, and REF_* files.
 
 ---
 
@@ -38,23 +42,31 @@ See [docs/](docs/) for metadata, state, and REF_* when present.
 
 | Area | What's in it |
 |------|----------------|
-| **Entity** | Unified class: schema, actions, data, metadata, caching. |
+| **Entity** | One class for schema, actions, data, metadata, caching. |
 | **Integration** | xwschema, xwaction, xwdata, XWNode. |
-| **Lifecycle** | State management, property discovery. |
+| **Lifecycle** | State and property discovery. |
 
 ---
 
 ## Docs and tests
 
 - **Start:** [docs/INDEX.md](docs/INDEX.md) or [docs/](docs/).
-- **Tests:** Run from project root per project layout.
+- **Tests:** From repo root, follow the layout in this package (pytest or project runner).
 
 ---
 
 ## License and links
 
-MIT — see [LICENSE](LICENSE). **Homepage:** https://exonware.com · **Repository:** https://github.com/exonware/xwentity  
+MIT - see [LICENSE](LICENSE). **Homepage:** https://exonware.com · **Repository:** https://github.com/exonware/xwentity  
 
-Contributing → CONTRIBUTING.md · Security → SECURITY.md (when present).
+
+## Async Support
+
+<!-- async-support:start -->
+- xwentity includes asynchronous execution paths in production code.
+- Source validation: 4 async def definitions and 1 await usages under src/.
+- Use async APIs for I/O-heavy or concurrent workloads to improve throughput and responsiveness.
+<!-- async-support:end -->
+Version: 0.6.0.4 | Updated: 31-Mar-2026
 
 *Built with ❤️ by eXonware.com - Revolutionizing Python Development Since 2025*
