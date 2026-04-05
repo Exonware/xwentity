@@ -12,7 +12,7 @@ stored/loaded without XWEntity depending on xwstorage or auth.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.5
+Version: 0.6.0.6
 Generation Date: 28-Jan-2026
 """
 

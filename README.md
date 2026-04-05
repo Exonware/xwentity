@@ -55,6 +55,25 @@ See [docs/](docs/) for metadata, state, and REF_* files.
 
 ---
 
+## Ecosystem functional contributions
+
+`xwentity` is the domain model backbone; other XW libs provide validation, behavior, data, and persistence layers around it.
+You can use `xwentity` standalone as a domain modeling layer with only the components you need.
+The broader XW stack is optional and is most relevant for enterprise and mission-critical systems that need fully integrated, self-hosted model infrastructure.
+
+| Supporting XW lib | What it provides to xwentity | Functional requirement it satisfies |
+|------|----------------|----------------|
+| **XWSchema** | Schema definitions and validation contracts attached to entities. | Strong model integrity and versionable validation rules. |
+| **XWAction** | Entity-scoped actions and workflow behavior. | Behavioral domain methods with consistent execution hooks. |
+| **XWData** | Multi-format data payload support and transformation paths. | Portable model serialization/input across formats. |
+| **XWNode** | Node/graph structural representation and traversal capabilities. | Rich relationships and graph-aware entity operations. |
+| **XWSystem** | Base object model and shared runtime primitives. | Uniform identity/runtime behavior across entities, collections, and groups. |
+| **XWStorage** | Persistence providers used by higher-level entity collections/groups. | Durable entity lifecycle management across storage backends. |
+
+This combination is the differentiator: `xwentity` is not just a dataclass layer, it is a contract-validated domain core connected to action, data, and storage infrastructure.
+
+---
+
 ## Docs and tests
 
 - **Start:** [docs/INDEX.md](docs/INDEX.md) or [docs/](docs/).
@@ -74,6 +93,6 @@ MIT - see [LICENSE](LICENSE). **Homepage:** https://exonware.com · **Repository
 - Source validation: 4 async def definitions and 1 await usages under src/.
 - Use async APIs for I/O-heavy or concurrent workloads to improve throughput and responsiveness.
 <!-- async-support:end -->
-Version: 0.6.0.5 | Updated: 31-Mar-2026
+Version: 0.6.0.6 | Updated: 05-Apr-2026
 
 *Built with ❤️ by eXonware.com - Revolutionizing Python Development Since 2025*

@@ -7,7 +7,7 @@ XWEntity merges features from both XWObject and XWEntity.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.5
+Version: 0.6.0.6
 Generation Date: 28-Jan-2026
 """
 
