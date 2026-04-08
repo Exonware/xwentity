@@ -7,7 +7,7 @@ GUIDE_DEV.md standards. All interfaces use 'I' prefix.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.6
+Version: 0.6.0.7
 Generation Date: 08-Nov-2025
 """
 

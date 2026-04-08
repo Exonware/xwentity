@@ -6,11 +6,11 @@
 
 [![Status](https://img.shields.io/badge/status-beta-blue.svg)](https://exonware.com)
 [![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
 ---
 
-## Install
+## 📦 Install
 
 ```bash
 pip install exonware-xwentity
@@ -23,7 +23,7 @@ pip install exonware-xwentity[full]
 
 ---
 
-## Quick start
+## 🚀 Quick start
 
 ```python
 from exonware.xwentity import XWEntity
@@ -38,7 +38,7 @@ See [docs/](docs/) for metadata, state, and REF_* files.
 
 ---
 
-## What you get
+## ✨ What you get
 
 | Area | What's in it |
 |------|----------------|
@@ -46,7 +46,7 @@ See [docs/](docs/) for metadata, state, and REF_* files.
 | **Integration** | xwschema, xwaction, xwdata, XWNode. |
 | **Lifecycle** | State and property discovery. |
 
-## Core model (explicit roles)
+## 🧱 Core model (explicit roles)
 
 - **XWEntity** (`entity.py`) composes `XWSchema` + `XWAction` + `XWData`: validation contract, entity-scoped behavior, and multi-format data payloads.
 - **XWCollection** (`collection.py`) is a logical, storage-agnostic collection of entities of the same type, with collection-level actions (search/bulk operations).
@@ -55,7 +55,7 @@ See [docs/](docs/) for metadata, state, and REF_* files.
 
 ---
 
-## Ecosystem functional contributions
+## 🌐 Ecosystem functional contributions
 
 `xwentity` is the domain model backbone; other XW libs provide validation, behavior, data, and persistence layers around it.
 You can use `xwentity` standalone as a domain modeling layer with only the components you need.
@@ -74,25 +74,25 @@ This combination is the differentiator: `xwentity` is not just a dataclass layer
 
 ---
 
-## Docs and tests
+## 📖 Docs and tests
 
 - **Start:** [docs/INDEX.md](docs/INDEX.md) or [docs/](docs/).
 - **Tests:** From repo root, follow the layout in this package (pytest or project runner).
 
 ---
 
-## License and links
+## 📜 License and links
 
-MIT - see [LICENSE](LICENSE). **Homepage:** https://exonware.com · **Repository:** https://github.com/exonware/xwentity  
+Apache-2.0 - see [LICENSE](LICENSE). **Homepage:** https://exonware.com · **Repository:** https://github.com/exonware/xwentity  
 
 
-## Async Support
+## ⏱️ Async Support
 
 <!-- async-support:start -->
 - xwentity includes asynchronous execution paths in production code.
 - Source validation: 4 async def definitions and 1 await usages under src/.
 - Use async APIs for I/O-heavy or concurrent workloads to improve throughput and responsiveness.
 <!-- async-support:end -->
-Version: 0.6.0.6 | Updated: 05-Apr-2026
+Version: 0.6.0.7 | Updated: 08-Apr-2026
 
 *Built with ❤️ by eXonware.com - Revolutionizing Python Development Since 2025*

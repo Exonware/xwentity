@@ -11,21 +11,41 @@ Generation Date: 28-Jan-2026
 """
 
 import sys
+import os
 from pathlib import Path
-# Configure UTF-8 encoding for Windows console
+
 from exonware.xwsystem.console.cli import ensure_utf8_console
+
 ensure_utf8_console()
-# Add src to path
-src_path = Path(__file__).parent.parent.parent / "src"
-if str(src_path) not in sys.path:
-    sys.path.insert(0, str(src_path))
+
+
+def _package_root() -> Path:
+    p = Path(__file__).resolve().parent
+    while p != p.parent:
+        if (p / "pyproject.toml").is_file() and (p / "src").is_dir():
+            return p
+        p = p.parent
+    raise RuntimeError("Could not locate package root from " + str(Path(__file__)))
+
+
+_PKG_ROOT = _package_root()
+
 from exonware.xwsystem.utils.test_runner import TestRunner
-if __name__ == "__main__":
+
+
+def main() -> int:
+    """Run core tests."""
+    os.chdir(_PKG_ROOT)
     runner = TestRunner(
         library_name="xwentity",
         layer_name="0.core",
         description="Core Tests - Fast, High-Value Checks (20% tests for 80% value)",
         test_dir=Path(__file__).parent,
-        markers=["xwentity_core"]
+        pytest_cwd=_PKG_ROOT,
+        markers=["xwentity_core"],
     )
-    sys.exit(runner.run())
+    return runner.run()
+
+
+if __name__ == "__main__":
+    sys.exit(main())
