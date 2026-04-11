@@ -7,16 +7,16 @@
 
 [project]
   name = "exonware-xwentity"
-  dynamic = ["version"]
+dynamic = ["version"]
   description = "Unified entity model with schema, actions, data, metadata, caching, and performance features"
   readme = "README.md"
   requires-python = ">=3.12"
   keywords = ["entity", "object", "schema", "actions", "data", "metadata", "caching", "exonware"]
   classifiers = []
   dependencies = [
-    "exonware-xwsystem",
-    "exonware-xwaction",
-    "exonware-xwnode",
+    "exonware-xwsystem==0.9.0.38",
+    "exonware-xwaction==0.9.0.11",
+    "exonware-xwnode==0.9.0.24",
   ]
   authors = [{ name = "eXonware Backend Team", email = "connect@exonware.com" }]
 
@@ -24,26 +24,26 @@
     text = "Apache-2.0"
 
   [project.optional-dependencies]
-    # First-party XW libs composed by this package (excludes exonware-xwsystem; see lazy/full).
+    # First-party XW libs composed by this package (excludes exonware-xwsystem==0.9.0.37; see lazy/full).
     xw = [
-      "exonware-xwaction",
-      "exonware-xwnode",
+      "exonware-xwaction==0.9.0.11",
+      "exonware-xwnode==0.9.0.24",
     ]
     lazy = [
-      "exonware-xwentity[xw]",
-      "exonware-xwlazy",
-      "exonware-xwsystem[lazy]",
-      "exonware-xwaction[xw]",
-      "exonware-xwnode[xw]",
+      "exonware-xwentity[xw]==0.6.0.9",
+      "exonware-xwlazy==1.0.1.80",
+      "exonware-xwsystem[lazy]==0.9.0.38",
+      "exonware-xwaction[xw]==0.9.0.11",
+      "exonware-xwnode[xw]==0.9.0.24",
     ]
     full = [
-      "exonware-xwentity[xw]",
-      "exonware-xwsystem[full]",
-      "exonware-xwaction[xw]",
-      "exonware-xwnode[xw]",
+      "exonware-xwentity[xw]==0.6.0.9",
+      "exonware-xwsystem[full]==0.9.0.38",
+      "exonware-xwaction[xw]==0.9.0.11",
+      "exonware-xwnode[xw]==0.9.0.24",
     ]
     dev = [
-      "exonware-xwentity[full]",
+      "exonware-xwentity[full]==0.6.0.9",
       "black>=23.0.0",
       "isort>=5.12.0",
       "mypy>=1.0.0",

@@ -15,7 +15,7 @@ by higher-level libraries (e.g. xwmodels) that may wrap or extend this class.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.8
+Version: 0.6.0.9
 Generation Date: 05-Mar-2026
 """
 

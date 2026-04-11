@@ -7,7 +7,7 @@ Following GUIDE_DEV.md: All abstract classes start with 'A' and extend 'I' inter
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.8
+Version: 0.6.0.9
 Generation Date: 08-Nov-2025
 """
 
