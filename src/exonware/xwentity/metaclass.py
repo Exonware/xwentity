@@ -8,7 +8,7 @@ implementation.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.9
+Version: 0.6.0.10
 Generation Date: 08-Nov-2025
 """
 

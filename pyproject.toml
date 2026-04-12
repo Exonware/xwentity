@@ -14,9 +14,9 @@ dynamic = ["version"]
   keywords = ["entity", "object", "schema", "actions", "data", "metadata", "caching", "exonware"]
   classifiers = []
   dependencies = [
-    "exonware-xwsystem==0.9.0.38",
+    "exonware-xwsystem==0.9.0.39",
     "exonware-xwaction==0.9.0.11",
-    "exonware-xwnode==0.9.0.24",
+    "exonware-xwnode==0.9.0.25",
   ]
   authors = [{ name = "eXonware Backend Team", email = "connect@exonware.com" }]
 
@@ -27,23 +27,23 @@ dynamic = ["version"]
     # First-party XW libs composed by this package (excludes exonware-xwsystem==0.9.0.37; see lazy/full).
     xw = [
       "exonware-xwaction==0.9.0.11",
-      "exonware-xwnode==0.9.0.24",
+      "exonware-xwnode==0.9.0.25",
     ]
     lazy = [
-      "exonware-xwentity[xw]==0.6.0.9",
-      "exonware-xwlazy==1.0.1.80",
-      "exonware-xwsystem[lazy]==0.9.0.38",
+      "exonware-xwentity[xw]==0.6.0.10",
+      "exonware-xwlazy==1.0.1.81",
+      "exonware-xwsystem[lazy]==0.9.0.39",
       "exonware-xwaction[xw]==0.9.0.11",
-      "exonware-xwnode[xw]==0.9.0.24",
+      "exonware-xwnode[xw]==0.9.0.25",
     ]
     full = [
-      "exonware-xwentity[xw]==0.6.0.9",
-      "exonware-xwsystem[full]==0.9.0.38",
+      "exonware-xwentity[xw]==0.6.0.10",
+      "exonware-xwsystem[full]==0.9.0.39",
       "exonware-xwaction[xw]==0.9.0.11",
-      "exonware-xwnode[xw]==0.9.0.24",
+      "exonware-xwnode[xw]==0.9.0.25",
     ]
     dev = [
-      "exonware-xwentity[full]==0.6.0.9",
+      "exonware-xwentity[full]==0.6.0.10",
       "black>=23.0.0",
       "isort>=5.12.0",
       "mypy>=1.0.0",
