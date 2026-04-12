@@ -16,12 +16,12 @@ def _today_release_date() -> str:
     return datetime.now().strftime("%d-%b-%Y")
 
 
-__version__ = "0.6.0.10"
+__version__ = "0.6.0.11"
 __date__ = _today_release_date()
 VERSION_MAJOR = 0
 VERSION_MINOR = 6
 VERSION_PATCH = 0
-VERSION_BUILD = 10
+VERSION_BUILD = 11
 VERSION_SUFFIX = ""
 VERSION_STRING = __version__ + VERSION_SUFFIX
 

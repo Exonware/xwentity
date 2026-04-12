@@ -93,6 +93,6 @@ Apache-2.0 - see [LICENSE](LICENSE). **Homepage:** https://exonware.com · **Rep
 - Source validation: 4 async def definitions and 1 await usages under src/.
 - Use async APIs for I/O-heavy or concurrent workloads to improve throughput and responsiveness.
 <!-- async-support:end -->
-Version: 0.6.0.10 | Updated: 13-Apr-2026
+Version: 0.6.0.11 | Updated: 13-Apr-2026
 
 *Built with ❤️ by eXonware.com - Revolutionizing Python Development Since 2025*
