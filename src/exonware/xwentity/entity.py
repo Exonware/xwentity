@@ -5,14 +5,14 @@ XWEntity - Entity Implementation
 This module provides the XWEntity class that composes schema, actions, data handling,
 metadata, caching, performance stats, state management, and property discovery.
 XWEntity is format-agnostic and storage-agnostic: it does not implement a storage
-provider or auth provider. Persistence (file-tree, single file, or future xwstorage)
-is the responsibility of the caller or a persistence layer. xwstorage works with
+provider or auth provider. Persistence (file-tree, single file, or future xwstorage.connect)
+is the responsibility of the caller or a persistence layer. xwstorage.connect works with
 IData/XWData; entity content can be passed via entity.data or entity.to_dict() and
-stored/loaded without XWEntity depending on xwstorage or auth.
+stored/loaded without XWEntity depending on xwstorage.connect or auth.
 Company: eXonware.com
 Author: eXonware Backend Team
 Email: connect@exonware.com
-Version: 0.6.0.11
+Version: 0.6.0.12
 Generation Date: 28-Jan-2026
 """
 
@@ -60,7 +60,7 @@ class XWEntity(AEntity):
     XWData is configured with XWNode strategies (node_mode, edge_mode,
     graph_manager_enabled, etc.) as specified in the configuration.
     Storage-agnostic: save/load use the given path and format only. Storage backends
-    (e.g. xwstorage) consume IData/XWData; use entity.data or entity.to_dict() to
+    (e.g. xwstorage.connect) consume IData/XWData; use entity.data or entity.to_dict() to
     pass content. XWEntity does not implement a storage provider or auth provider.
     Supports automatic property discovery via decorators and type hints
     when using subclasses with the metaclass functionality.
@@ -517,7 +517,7 @@ class XWEntity(AEntity):
                                 # For now, raise an error suggesting to use Python
                                 raise ValueError(
                                     f"JavaScript script execution not yet implemented. "
-                                    f"Use 'python' language or install exonware-xwstorage for JavaScript support."
+                                    f"Use 'python' language; JavaScript script execution is not implemented in this runtime."
                                 )
                             else:
                                 raise ValueError(f"Unsupported script language: {script_language}. Supported: 'python', 'javascript'")
@@ -912,8 +912,8 @@ class XWEntity(AEntity):
         Save entity to storage in any supported format (format-agnostic; uses xwdata/xwsystem).
         XWEntity is storage-agnostic: this writes to the given path using whatever format
         xwdata supports (json, xwjson, yaml, etc.). "Where" and "in what shape" (e.g. file-tree
-        vs single file vs future xwstorage) are the responsibility of the caller or a
-        persistence layer. Storage backends like xwstorage work with IData/XWData; they can
+        vs single file vs future xwstorage.connect) are the responsibility of the caller or a
+        persistence layer. Storage backends like xwstorage.connect work with IData/XWData; they can
         accept entity content via entity.data or entity.to_dict() and do not require XWEntity
         to implement a storage provider or auth provider.
         Args:
